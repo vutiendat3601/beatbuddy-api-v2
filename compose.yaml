@@ -7,6 +7,8 @@ services:
       POSTGRES_USER: beatbuddy
     ports:
       - "5432"
+    networks:
+      - default
 networks:
   default:
-    name: beatbuddy
+    name: beatbuddy-v2

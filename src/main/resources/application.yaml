@@ -1,3 +1,5 @@
 spring:
   application:
     name: beatbuddy-api-v2
+  jpa:
+    open-in-view: false
