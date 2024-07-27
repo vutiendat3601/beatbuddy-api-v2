@@ -3,3 +3,11 @@ spring:
     name: beatbuddy-api-v2
   jpa:
     open-in-view: false
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        "[format_sql]": true
+        jdbc:
+          "[time_zone]": UTC
