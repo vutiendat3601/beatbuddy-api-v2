@@ -9,6 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.util.LinkedList;
@@ -92,6 +93,7 @@ public class Track extends AuditEntity {
   @Column(name = "total_listens", nullable = false)
   private Long totalListens = 0L;
 
+  @OrderBy("totalLikes DESC, name ASC")
   @Builder.Default
   @ManyToMany(
       cascade = {CascadeType.PERSIST, CascadeType.MERGE},
