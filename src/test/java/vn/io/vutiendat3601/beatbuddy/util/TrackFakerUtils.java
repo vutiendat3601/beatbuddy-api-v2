@@ -6,10 +6,10 @@ import java.time.ZoneId;
 import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
+import java.util.SortedSet;
+import java.util.TreeSet;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import vn.io.vutiendat3601.beatbuddy.domain.artist.Artist;
@@ -44,11 +44,12 @@ public class TrackFakerUtils {
         ArtistFakerUtils.randomArtistList(number > 100 ? 100 : number / 2 + 1);
     for (int i = 0; i < number; i++) {
       final int numOfArtists = RANDOM.nextInt(3);
-      final Set<Artist> artists = new HashSet<>();
+      final SortedSet<Artist> artistSet = new TreeSet<>(new ArtistTotalLikesComparator());
       for (int j = 0; j < numOfArtists; j++) {
         final int k = RANDOM.nextInt(mockArtists.size());
-        artists.add(mockArtists.get(k));
+        artistSet.add(mockArtists.get(k));
       }
+      final List<Artist> artists = new ArrayList<>(artistSet);
       final String id = RANDOM.hex(16).toLowerCase();
       final String urn = "beatbuddy:track:" + id;
       final Integer durationSec = RANDOM.nextInt(1000) > 10 ? RANDOM.nextInt(1000) : null;
@@ -94,7 +95,7 @@ public class TrackFakerUtils {
               .totalLikes(RANDOM.nextLong(Integer.MAX_VALUE))
               .totalViews(RANDOM.nextLong(Integer.MAX_VALUE))
               .totalListens(RANDOM.nextLong(Integer.MAX_VALUE))
-              .artists(new ArrayList<>(artists))
+              .artists(artists)
               .createdAt(createdNow)
               .updatedAt(RANDOM.nextBoolean() ? createdNow : ZonedDateTime.now())
               .createdBy(createdBy)

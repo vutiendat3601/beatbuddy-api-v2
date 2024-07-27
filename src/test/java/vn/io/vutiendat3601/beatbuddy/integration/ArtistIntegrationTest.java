@@ -38,6 +38,7 @@ public class ArtistIntegrationTest extends AbstractIntegrationTest {
   @Test
   void canGetTrackById() {
     // Given
+    final ArtistDto artistDto = artistDtoMapper.apply(artists[0]);
     final String id = artists[0].getId();
 
     // When
@@ -45,11 +46,13 @@ public class ArtistIntegrationTest extends AbstractIntegrationTest {
 
     // Then
     actual.expectStatus().isOk();
+    actual.expectBody(new ParameterizedTypeReference<ArtistDto>() {}).isEqualTo(artistDto);
   }
 
   @Test
   void canGetTrackByIds() {
     // Given
+    final List<ArtistDto> expected = List.of(artists).stream().map(artistDtoMapper).toList();
     final String ids = String.join(",", List.of(artists).stream().map(Artist::getId).toList());
 
     // When
@@ -57,8 +60,6 @@ public class ArtistIntegrationTest extends AbstractIntegrationTest {
 
     // Then
     actual.expectStatus().isOk();
-    actual
-        .expectBody(new ParameterizedTypeReference<List<ArtistDto>>() {})
-        .isEqualTo(List.of(artists).stream().map(artistDtoMapper).toList());
+    actual.expectBody(new ParameterizedTypeReference<List<ArtistDto>>() {}).isEqualTo(expected);
   }
 }

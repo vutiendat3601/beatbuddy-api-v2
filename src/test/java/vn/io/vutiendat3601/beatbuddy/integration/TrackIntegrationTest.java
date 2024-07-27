@@ -2,14 +2,18 @@ package vn.io.vutiendat3601.beatbuddy.integration;
 
 import static vn.io.vutiendat3601.beatbuddy.util.TrackFakerUtils.randomTrackList;
 
+import java.time.Duration;
 import java.util.List;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
 import vn.io.vutiendat3601.beatbuddy.AbstractIntegrationTest;
 import vn.io.vutiendat3601.beatbuddy.domain.track.Track;
+import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDto;
+import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDtoMapper;
 import vn.io.vutiendat3601.beatbuddy.domain.track.TrackRepository;
 
 public class TrackIntegrationTest extends AbstractIntegrationTest {
@@ -18,8 +22,11 @@ public class TrackIntegrationTest extends AbstractIntegrationTest {
 
   @Autowired private TrackRepository trackRepo;
 
+  @Autowired private TrackDtoMapper trackDtoMapper;
+
   @BeforeEach
   void setUp() {
+    webTestClient = webTestClient.mutate().responseTimeout(Duration.ofDays(1)).build();
     final List<Track> trackList = randomTrackList(NUM_OF_TRACKS);
     trackRepo.saveAll(trackList);
     tracks = trackList.toArray(new Track[NUM_OF_TRACKS]);
@@ -31,11 +38,9 @@ public class TrackIntegrationTest extends AbstractIntegrationTest {
   }
 
   @Test
-  void test() {}
-
-  @Test
   void canGetTrackById() {
     // Given
+    final TrackDto expected = trackDtoMapper.apply(tracks[0]);
     final String id = tracks[0].getId();
 
     // When
@@ -43,11 +48,13 @@ public class TrackIntegrationTest extends AbstractIntegrationTest {
 
     // Then
     actual.expectStatus().isOk();
+    actual.expectBody(new ParameterizedTypeReference<TrackDto>() {}).isEqualTo(expected);
   }
 
   @Test
   void canGetTrackByIds() {
     // Given
+    final List<TrackDto> expected = List.of(tracks).stream().map(trackDtoMapper).toList();
     final String ids = String.join(",", List.of(tracks).stream().map(Track::getId).toList());
 
     // When
@@ -55,5 +62,6 @@ public class TrackIntegrationTest extends AbstractIntegrationTest {
 
     // Then
     actual.expectStatus().isOk();
+    actual.expectBody(new ParameterizedTypeReference<List<TrackDto>>() {}).isEqualTo(expected);
   }
 }
