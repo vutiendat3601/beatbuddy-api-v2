@@ -11,7 +11,7 @@
   </parent>
   <groupId>vn.io.vutiendat3601.beatbuddy</groupId>
   <artifactId>beatbuddy-api-v2</artifactId>
-  <version>2.0.0</version>
+  <version>1.0.0</version>
   <name>beatbuddy-api-v2</name>
   <description>Beat Buddy API version 2</description>
   <url />
