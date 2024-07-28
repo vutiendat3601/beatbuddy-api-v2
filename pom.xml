@@ -178,7 +178,9 @@
           </from>
           <to>
             <image>docker.io/${docker.username}/${docker.image.name}:${docker.image.tag}</image>
-            <tag>latest</tag>
+            <tags>
+              <tag>latest</tag>
+            </tags>
           </to>
         </configuration>
       </plugin>
