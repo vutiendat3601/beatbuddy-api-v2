@@ -1,0 +1,35 @@
+{
+  "AWSEBDockerrunVersion": 3,
+  "containerDefinitions": [
+    {
+      "name": "beatbuddy-api-v2",
+      "image": "vutiendat3601/beatbuddy-api-v2:latest",
+      "essential": true,
+      "memory": 512,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 8000
+        }
+      ],
+      "environment": [
+        {
+          "name": "SPRING_PROFILES_ACTIVE",
+          "value": "stag"
+        },
+        {
+          "name": "SPRING_DATASOURCE_URL",
+          "value": "jdbc:postgresql://awseb-e-7kqybhf8cj-stack-awsebrdsdatabase-zhck3ayewhut.cp4wgqiao0s0.ap-southeast-1.rds.amazonaws.com:5432/beatbuddy"
+        },
+        {
+          "name": "SPRING_DATASOURCE_USERNAME",
+          "value": "beatbuddy"
+        },
+        {
+          "name": "SPRING_DATASOURCE_PASSWORD",
+          "value": "beatbuddy"
+        }
+      ]
+    }
+  ]
+}

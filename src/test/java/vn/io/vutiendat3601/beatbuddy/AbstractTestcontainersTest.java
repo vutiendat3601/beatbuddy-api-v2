@@ -13,10 +13,10 @@ public abstract class AbstractTestcontainersTest {
   @Container protected static final PostgreSQLContainer<?> POSTGRES_CONTAINER;
 
   static {
-    POSTGRES_CONTAINER = new PostgreSQLContainer<>("postgres:16.1");
-    POSTGRES_CONTAINER.withDatabaseName("fullstack-dao-unit-test");
-    POSTGRES_CONTAINER.withUsername("fullstack");
-    POSTGRES_CONTAINER.withPassword("fullstack");
+    POSTGRES_CONTAINER = new PostgreSQLContainer<>("postgres:16.3");
+    POSTGRES_CONTAINER.withDatabaseName("beatbuddy");
+    POSTGRES_CONTAINER.withUsername("beatbuddy");
+    POSTGRES_CONTAINER.withPassword("beatbuddy");
   }
 
   @DynamicPropertySource

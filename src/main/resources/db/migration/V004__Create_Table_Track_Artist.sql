@@ -1,5 +1,5 @@
 CREATE TABLE track_artist (
-	pk_id bigserial,
+	pk_id uuid DEFAULT gen_random_uuid() NOT NULL,
 	track_pk_id uuid NULL,
 	artist_pk_id uuid NULL,
 	is_active bool NULL,

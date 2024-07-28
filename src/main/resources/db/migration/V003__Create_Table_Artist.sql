@@ -15,12 +15,12 @@ CREATE TABLE artist (
 	total_likes int8 DEFAULT 0 NOT NULL,
 	total_views int8 DEFAULT 0 NOT NULL,
 	ref_code varchar(100) NULL,
+	tags text DEFAULT ''::text NOT NULL,
+	tsv tsvector NULL,
 	created_at timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	updated_at timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	created_by varchar(255) NULL,
 	updated_by varchar(255) NULL,
-	tags text DEFAULT ''::text NOT NULL,
-	tsv tsvector NULL,
 	CONSTRAINT artists_pk PRIMARY KEY (pk_id),
 	CONSTRAINT artists_id_key UNIQUE (id),
 	CONSTRAINT artists_ref_code_key UNIQUE (ref_code),
@@ -34,7 +34,7 @@ CREATE OR REPLACE FUNCTION public.artist_update_tsv_column()
  LANGUAGE plpgsql
 AS $function$
 begin
-   new.tsv = to_tsvector(lower(unaccent(new.tags)));
+  new.tsv = to_tsvector(lower(public.unaccent(new.tags)));
   return new;
 END;
 $function$

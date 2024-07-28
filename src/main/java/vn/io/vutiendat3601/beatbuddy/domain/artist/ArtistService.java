@@ -26,8 +26,9 @@ public class ArtistService {
 
   @NonNull
   public List<ArtistDto> getArtistByIds(@NonNull List<String> ids) {
+    final List<Artist> artists = artistDao.selectByIds(ids);
     final Map<String, ArtistDto> artistMap =
-        artistDao.selectByIds(ids).stream()
+        artists.stream()
             .filter(a -> a != null)
             .collect(Collectors.toMap(Artist::getId, artistDtoMapper::apply));
     final List<ArtistDto> artistDtos = new LinkedList<>();

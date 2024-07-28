@@ -25,8 +25,9 @@ public class TrackService {
 
   @NonNull
   public List<TrackDto> getTrackByIds(@NonNull List<String> ids) {
+    final List<Track> tracks = trackDao.selectByIds(ids);
     final Map<String, TrackDto> trackMap =
-        trackDao.selectByIds(ids).stream()
+        tracks.stream()
             .filter(t -> t != null)
             .collect(Collectors.toMap(Track::getId, trackDtoMapper::apply));
     final List<TrackDto> trackDtos = new LinkedList<>();

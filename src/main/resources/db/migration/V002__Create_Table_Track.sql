@@ -33,7 +33,7 @@ CREATE OR REPLACE FUNCTION public.track_update_tsv_column()
  LANGUAGE plpgsql
 AS $function$
 begin
-   new.tsv = to_tsvector(lower(unaccent(new.tags)));
+  new.tsv = to_tsvector(lower(public.unaccent(new.tags)));
   return new;
 END;
 $function$
