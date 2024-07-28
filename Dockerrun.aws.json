@@ -19,7 +19,7 @@
         },
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://awseb-e-7kqybhf8cj-stack-awsebrdsdatabase-zhck3ayewhut.cp4wgqiao0s0.ap-southeast-1.rds.amazonaws.com:5432/beatbuddy"
+          "value": "jdbc:postgresql://awseb-e-zwktwpwq4p-stack-awsebrdsdatabase-q0bvmsgugeqc.cp4wgqiao0s0.ap-southeast-1.rds.amazonaws.com:5432/beatbuddy"
         },
         {
           "name": "SPRING_DATASOURCE_USERNAME",
