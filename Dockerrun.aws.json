@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "beatbuddy-api-v2",
-      "image": "vutiendat3601/beatbuddy-api-v2:2024.07.28_19.17.39",
+      "image": "vutiendat3601/beatbuddy-api-v2:2024.07.29_04.11.57",
       "essential": true,
       "memory": 512,
       "portMappings": [
@@ -19,7 +19,7 @@
         },
         {
           "name": "SPRING_DATASOURCE_URL",
-          "value": "jdbc:postgresql://awseb-e-zwktwpwq4p-stack-awsebrdsdatabase-q0bvmsgugeqc.cp4wgqiao0s0.ap-southeast-1.rds.amazonaws.com:5432/beatbuddy"
+          "value": "jdbc:postgresql://awseb-e-gacc7w9vgw-stack-awsebrdsdatabase-dko24cflywcv.cp4wgqiao0s0.ap-southeast-1.rds.amazonaws.com:5432/beatbuddy"
         },
         {
           "name": "SPRING_DATASOURCE_USERNAME",
