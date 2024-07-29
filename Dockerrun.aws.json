@@ -3,7 +3,7 @@
   "containerDefinitions": [
     {
       "name": "beatbuddy-api-v2",
-      "image": "vutiendat3601/beatbuddy-api-v2:2024.07.29_06.41.44",
+      "image": "vutiendat3601/beatbuddy-api-v2:2024.07.29_07.11.27",
       "essential": true,
       "memory": 512,
       "portMappings": [
