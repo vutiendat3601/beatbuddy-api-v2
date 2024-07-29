@@ -2,3 +2,7 @@ spring:
   docker:
     compose:
       enabled: false
+  devtools:
+    livereload:
+      enabled: false
+    add-properties: false
