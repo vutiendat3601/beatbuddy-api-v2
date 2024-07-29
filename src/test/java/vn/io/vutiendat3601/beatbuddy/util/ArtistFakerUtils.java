@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import vn.io.vutiendat3601.beatbuddy.domain.artist.Artist;
@@ -81,7 +82,7 @@ public class ArtistFakerUtils {
               .biography(biography)
               .thumbnail(thumbnail)
               .background(background)
-              .tags(name)
+              .tags(Set.of(StringUtils.removeAccent(name)))
               .refCode(refCode)
               .totalLikes(RANDOM.nextLong(Integer.MAX_VALUE))
               .totalViews(RANDOM.nextLong(Integer.MAX_VALUE))

@@ -10,4 +10,15 @@ public interface TrackDao {
 
   @NonNull
   List<Track> selectByIds(@NonNull List<String> ids);
+
+  @NonNull
+  List<Track> selectByUrns(@NonNull List<String> urns);
+
+  Optional<Track> selectByUrn(String urn);
+
+  boolean existsByUrn(String urn);
+
+  List<Track> selectByTopTotalLikes(Integer top);
+
+  List<Track> selectByArtistIdAndTopTotalLikes(String artistId, Integer top);
 }

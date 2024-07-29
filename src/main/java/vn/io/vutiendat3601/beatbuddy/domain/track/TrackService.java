@@ -14,13 +14,23 @@ import vn.io.vutiendat3601.beatbuddy.common.exception.ResourceNotFoundException;
 public class TrackService {
   private final TrackDao trackDao;
   private final TrackDtoMapper trackDtoMapper;
+  private final TrackDetailsDtoMapper trackDetailsDtoMapper;
 
   @NonNull
-  public TrackDto getTrackById(@NonNull String id) {
+  public TrackDetailsDto getTrackDetailsById(@NonNull String id) {
     return trackDao
         .selectById(id)
-        .map(trackDtoMapper::apply)
+        .map(trackDetailsDtoMapper::apply)
         .orElseThrow(() -> new ResourceNotFoundException("Track not found: [id=%s]".formatted(id)));
+  }
+
+  @NonNull
+  public TrackDto getTrackByUrn(@NonNull String urn) {
+    return trackDao
+        .selectByUrn(urn)
+        .map(trackDtoMapper::apply)
+        .orElseThrow(
+            () -> new ResourceNotFoundException("Track not found: [urn=%s]".formatted(urn)));
   }
 
   @NonNull
@@ -33,5 +43,10 @@ public class TrackService {
     final List<TrackDto> trackDtos = new LinkedList<>();
     ids.forEach(id -> trackDtos.add(trackMap.get(id)));
     return trackDtos;
+  }
+
+  public List<TrackDto> getPopularTrack(Integer top) {
+    final List<Track> tracks = trackDao.selectByTopTotalLikes(top);
+    return tracks.stream().map(trackDtoMapper::apply).toList();
   }
 }

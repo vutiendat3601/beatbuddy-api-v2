@@ -26,12 +26,14 @@ public class TrackServiceTest {
   @Mock private TrackDao trackDao;
   private final ArtistDtoMapper artistDtoMapper = new ArtistDtoMapper();
   private final TrackDtoMapper trackDtoMapper = new TrackDtoMapper(artistDtoMapper);
+  private final TrackDetailsDtoMapper trackDetailsDtoMapper =
+      new TrackDetailsDtoMapper(artistDtoMapper);
 
   private TrackService underTest;
 
   @BeforeEach
   void setUp() {
-    underTest = new TrackService(trackDao, trackDtoMapper);
+    underTest = new TrackService(trackDao, trackDtoMapper, trackDetailsDtoMapper);
   }
 
   /* #: getTrackById */
@@ -41,10 +43,10 @@ public class TrackServiceTest {
     final Track track = randomTrack();
     final String id = track.getId();
     when(trackDao.selectById(id)).thenReturn(Optional.of(track));
-    final TrackDto expected = trackDtoMapper.apply(track);
+    final TrackDetailsDto expected = trackDetailsDtoMapper.apply(track);
 
     // When
-    final TrackDto actual = underTest.getTrackById(id);
+    final TrackDetailsDto actual = underTest.getTrackDetailsById(id);
 
     // Then
     assertEquals(expected, actual);
@@ -57,7 +59,7 @@ public class TrackServiceTest {
     when(trackDao.selectById(id)).thenReturn(Optional.empty());
 
     // When & Then
-    Executable exec = () -> underTest.getTrackById(id);
+    Executable exec = () -> underTest.getTrackDetailsById(id);
     assertThrows(ResourceNotFoundException.class, exec);
   }
 

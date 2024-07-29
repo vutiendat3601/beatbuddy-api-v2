@@ -1,11 +1,14 @@
 package vn.io.vutiendat3601.beatbuddy.domain.artist;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -14,6 +17,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import vn.io.vutiendat3601.beatbuddy.common.entity.AuditEntity;
+import vn.io.vutiendat3601.beatbuddy.converter.StringSetConverter;
 
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
@@ -73,7 +77,8 @@ public class Artist extends AuditEntity {
 
   @Builder.Default
   @Column(name = "tags", nullable = false)
-  private String tags = "";
+  @Convert(converter = StringSetConverter.class)
+  private Set<String> tags = new HashSet<>();
 
   @Column(name = "ref_code", updatable = false)
   private String refCode;

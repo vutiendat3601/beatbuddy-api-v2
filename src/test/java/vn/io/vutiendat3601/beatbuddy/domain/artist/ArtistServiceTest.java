@@ -19,16 +19,20 @@ import org.junit.jupiter.api.function.Executable;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import vn.io.vutiendat3601.beatbuddy.common.exception.ResourceNotFoundException;
+import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDao;
+import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDtoMapper;
 
 @ExtendWith(MockitoExtension.class)
 public class ArtistServiceTest {
   @Mock private ArtistDao artistDao;
+  @Mock private TrackDao trackDao;
   private final ArtistDtoMapper artistDtoMapper = new ArtistDtoMapper();
+  private final TrackDtoMapper trackDtoMapper = new TrackDtoMapper(artistDtoMapper);
   private ArtistService underTest;
 
   @BeforeEach
   void setUp() {
-    underTest = new ArtistService(artistDao, artistDtoMapper);
+    underTest = new ArtistService(artistDao, trackDao, artistDtoMapper, trackDtoMapper);
   }
 
   @Test

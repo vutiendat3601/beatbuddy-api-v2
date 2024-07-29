@@ -8,12 +8,18 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 import vn.io.vutiendat3601.beatbuddy.common.exception.ResourceNotFoundException;
+import vn.io.vutiendat3601.beatbuddy.domain.track.Track;
+import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDao;
+import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDto;
+import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDtoMapper;
 
 @RequiredArgsConstructor
 @Service
 public class ArtistService {
   private final ArtistDao artistDao;
+  private final TrackDao trackDao;
   private final ArtistDtoMapper artistDtoMapper;
+  private final TrackDtoMapper trackDtoMapper;
 
   @NonNull
   public ArtistDto getArtistById(@NonNull String id) {
@@ -34,5 +40,11 @@ public class ArtistService {
     final List<ArtistDto> artistDtos = new LinkedList<>();
     ids.forEach(id -> artistDtos.add(artistMap.get(id)));
     return artistDtos;
+  }
+
+  @NonNull
+  public List<TrackDto> getPopularTrack(@NonNull String artistId, @NonNull Integer top) {
+    final List<Track> artists = trackDao.selectByArtistIdAndTopTotalLikes(artistId, top);
+    return artists.stream().map(trackDtoMapper::apply).toList();
   }
 }

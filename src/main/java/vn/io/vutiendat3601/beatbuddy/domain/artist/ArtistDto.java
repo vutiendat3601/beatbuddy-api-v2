@@ -1,6 +1,7 @@
 package vn.io.vutiendat3601.beatbuddy.domain.artist;
 
 import java.time.LocalDate;
+import java.util.Set;
 
 public record ArtistDto(
     String id,
@@ -15,6 +16,6 @@ public record ArtistDto(
     String biography,
     String thumbnail,
     String background,
-    String tags,
+    Set<String> tags,
     Long totalLikes,
     Long totalViews) {}
