@@ -2,6 +2,7 @@ package vn.io.vutiendat3601.beatbuddy.domain.track;
 
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
+import jakarta.persistence.Convert;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -12,8 +13,10 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OrderBy;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -22,6 +25,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import vn.io.vutiendat3601.beatbuddy.common.entity.AuditEntity;
+import vn.io.vutiendat3601.beatbuddy.converter.StringSetConverter;
 import vn.io.vutiendat3601.beatbuddy.domain.artist.Artist;
 
 @SuperBuilder
@@ -73,7 +77,8 @@ public class Track extends AuditEntity {
 
   @Builder.Default
   @Column(name = "tags", nullable = false)
-  private String tags = "";
+  @Convert(converter = StringSetConverter.class)
+  private Set<String> tags = new HashSet<>();
 
   @Column(name = "ref_code", updatable = false)
   private String refCode;

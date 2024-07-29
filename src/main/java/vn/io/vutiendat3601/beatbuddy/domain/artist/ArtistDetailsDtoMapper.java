@@ -5,17 +5,20 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.Assert;
 
 @Component
-public class ArtistDtoMapper implements Function<Artist, ArtistDto> {
+public class ArtistDetailsDtoMapper implements Function<Artist, ArtistDetailsDto> {
   @Override
-  public ArtistDto apply(Artist artist) {
+  public ArtistDetailsDto apply(Artist artist) {
     Assert.notNull(artist, "artist must not be null");
-    return new ArtistDto(
+    return new ArtistDetailsDto(
         artist.getId(),
         artist.getUrn(),
         artist.getName(),
         artist.getIsVerified(),
         artist.getIsPublic(),
+        artist.getRealName(),
+        artist.getBirthDate(),
         artist.getDescription(),
+        artist.getNationality(),
         artist.getBiography(),
         artist.getThumbnail(),
         artist.getBackground(),

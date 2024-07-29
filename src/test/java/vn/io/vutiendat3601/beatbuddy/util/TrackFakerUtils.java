@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.SortedSet;
 import java.util.TreeSet;
 import java.util.UUID;
@@ -89,7 +90,7 @@ public class TrackFakerUtils {
               .thumbnail(thumbnail)
               .isPublic(RANDOM.nextBoolean())
               .isPlayable(fileM3u8 != null)
-              .tags(name)
+              .tags(Set.of(StringUtils.removeAccent(name)))
               .refCode(refCode)
               .fileM3u8(fileM3u8)
               .totalLikes(RANDOM.nextLong(Integer.MAX_VALUE))

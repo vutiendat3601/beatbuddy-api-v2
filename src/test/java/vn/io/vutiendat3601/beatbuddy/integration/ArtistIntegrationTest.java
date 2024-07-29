@@ -36,13 +36,13 @@ public class ArtistIntegrationTest extends AbstractIntegrationTest {
   }
 
   @Test
-  void canGetTrackById() {
+  void canGetArtistById() {
     // Given
     final ArtistDto artistDto = artistDtoMapper.apply(artists[0]);
     final String id = artists[0].getId();
 
     // When
-    final ResponseSpec actual = webTestClient.get().uri("/v1/artists/{id}", id).exchange();
+    final ResponseSpec actual = webTestClient.get().uri("/v2/artists/{id}", id).exchange();
 
     // Then
     actual.expectStatus().isOk();
@@ -56,7 +56,7 @@ public class ArtistIntegrationTest extends AbstractIntegrationTest {
     final String ids = String.join(",", List.of(artists).stream().map(Artist::getId).toList());
 
     // When
-    final ResponseSpec actual = webTestClient.get().uri("/v1/artists?ids=" + ids).exchange();
+    final ResponseSpec actual = webTestClient.get().uri("/v2/artists?ids=" + ids).exchange();
 
     // Then
     actual.expectStatus().isOk();

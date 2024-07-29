@@ -1,5 +1,6 @@
 package vn.io.vutiendat3601.beatbuddy.domain.track;
 
+import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,19 +10,26 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@Tag(name = "Track")
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("v1/tracks")
+@RequestMapping("v2/tracks")
 public class TrackController {
   private final TrackService trackService;
 
   @GetMapping("{id}")
-  public ResponseEntity<TrackDto> getTrackById(@PathVariable String id) {
-    return ResponseEntity.ok(trackService.getTrackById(id));
+  public ResponseEntity<TrackDetailsDto> getTrackById(@PathVariable String id) {
+    return ResponseEntity.ok(trackService.getTrackDetailsById(id));
   }
 
   @GetMapping
   public ResponseEntity<List<TrackDto>> getTrackByIds(@RequestParam List<String> ids) {
     return ResponseEntity.ok(trackService.getTrackByIds(ids));
+  }
+
+  @GetMapping("popularity")
+  public ResponseEntity<List<TrackDto>> getPopularTrack(
+      @RequestParam(defaultValue = "10", required = false) Integer top) {
+    return ResponseEntity.ok(trackService.getPopularTrack(top));
   }
 }
