@@ -44,7 +44,7 @@ public class TrackIntegrationTest extends AbstractIntegrationTest {
     final String id = tracks[0].getId();
 
     // When
-    final ResponseSpec actual = webTestClient.get().uri("/v1/tracks/{id}", id).exchange();
+    final ResponseSpec actual = webTestClient.get().uri("/v2/tracks/{id}", id).exchange();
 
     // Then
     actual.expectStatus().isOk();
@@ -58,7 +58,7 @@ public class TrackIntegrationTest extends AbstractIntegrationTest {
     final String ids = String.join(",", List.of(tracks).stream().map(Track::getId).toList());
 
     // When
-    final ResponseSpec actual = webTestClient.get().uri("/v1/tracks?ids=" + ids).exchange();
+    final ResponseSpec actual = webTestClient.get().uri("/v2/tracks?ids=" + ids).exchange();
 
     // Then
     actual.expectStatus().isOk();

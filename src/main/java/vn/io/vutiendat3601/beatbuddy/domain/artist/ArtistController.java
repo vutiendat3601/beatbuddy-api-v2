@@ -19,7 +19,7 @@ public class ArtistController {
   private final ArtistService artistService;
 
   @GetMapping("{id}")
-  public ResponseEntity<ArtistDto> getTrackById(@PathVariable String id) {
+  public ResponseEntity<ArtistDetailsDto> getTrackById(@PathVariable String id) {
     return ResponseEntity.ok(artistService.getArtistById(id));
   }
 

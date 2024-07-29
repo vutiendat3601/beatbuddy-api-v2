@@ -23,12 +23,12 @@ public class PlaylistIntegrationTest extends AbstractIntegrationTest {
     // When
     webTestClient
         .post()
-        .uri("/v1/playlists")
+        .uri("/v2/playlists")
         .body(Mono.just(playlistCreateReq), PlaylistCreateRequest.class)
         .exchange()
         .expectStatus()
         .isOk();
-    final ResponseSpec actual = webTestClient.get().uri("/v1/playlists/me").exchange();
+    final ResponseSpec actual = webTestClient.get().uri("/v2/playlists/me").exchange();
 
     // Then
     actual.expectStatus().isOk();

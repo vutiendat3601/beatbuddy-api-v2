@@ -90,13 +90,14 @@ public class PlaylistService {
 
   @NonNull
   private PlaylistDetailsDto mapToPlaylistDetailsDto(@NonNull Playlist playlist) {
+    final List<String> itemUrns = playlist.getItemUrns();
     final List<String> trackUrns =
         playlist.getItemUrns().stream().filter(iu -> iu.startsWith(TRACK_URN_PREFIX)).toList();
     final List<Track> tracks = trackDao.selectByUrns(trackUrns);
     final Map<String, TrackDto> trackDtoMap =
         tracks.stream().map(trackDtoMapper).collect(Collectors.toMap(TrackDto::urn, t -> t));
     final List<TrackDto> trackDtos = new LinkedList<>();
-    for (String urn : playlist.getItemUrns()) {
+    for (String urn : itemUrns) {
       TrackDto trackDto = null;
       if (trackDtoMap.containsKey(urn)) {
         trackDto = trackDtoMap.get(urn);

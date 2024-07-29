@@ -77,11 +77,10 @@ public class PlaylistServiceTest {
     final Set<String> tags = Set.of(FAKER.lorem().word(), FAKER.lorem().word());
     final List<Track> tracks = List.of(randomTrack(), randomTrack());
     final List<String> itemUrns = tracks.stream().map(Track::getUrn).toList();
-    final List<String> trackIds = tracks.stream().map(Track::getId).toList();
+    final List<String> trackUrns = tracks.stream().map(Track::getUrn).toList();
     final ZonedDateTime createdAt = ZonedDateTime.now();
     final ZonedDateTime updatedAt = ZonedDateTime.now();
     final List<TrackDto> trackDtos = tracks.stream().map(trackDtoMapper::apply).toList();
-
     final Playlist playlist =
         Playlist.builder()
             .id(id)
@@ -96,7 +95,7 @@ public class PlaylistServiceTest {
             .createdAt(createdAt)
             .updatedAt(updatedAt)
             .build();
-    when(trackDao.selectByIds(trackIds)).thenReturn(tracks);
+    when(trackDao.selectByUrns(trackUrns)).thenReturn(tracks);
     when(playlistDao.selectById(id)).thenReturn(Optional.of(playlist));
 
     // When

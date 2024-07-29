@@ -27,12 +27,15 @@ public class ArtistServiceTest {
   @Mock private ArtistDao artistDao;
   @Mock private TrackDao trackDao;
   private final ArtistDtoMapper artistDtoMapper = new ArtistDtoMapper();
+  private final ArtistDetailsDtoMapper artistDetailsDtoMapper = new ArtistDetailsDtoMapper();
   private final TrackDtoMapper trackDtoMapper = new TrackDtoMapper(artistDtoMapper);
   private ArtistService underTest;
 
   @BeforeEach
   void setUp() {
-    underTest = new ArtistService(artistDao, trackDao, artistDtoMapper, trackDtoMapper);
+    underTest =
+        new ArtistService(
+            artistDao, trackDao, artistDtoMapper, artistDetailsDtoMapper, trackDtoMapper);
   }
 
   @Test
@@ -41,10 +44,10 @@ public class ArtistServiceTest {
     final Artist artist = randomArtist();
     final String id = artist.getId();
     when(artistDao.selectById(id)).thenReturn(Optional.of(artist));
-    final ArtistDto expected = artistDtoMapper.apply(artist);
+    final ArtistDetailsDto expected = artistDetailsDtoMapper.apply(artist);
 
     // When
-    final ArtistDto actual = underTest.getArtistById(id);
+    final ArtistDetailsDto actual = underTest.getArtistById(id);
 
     // Then
     assertEquals(expected, actual);

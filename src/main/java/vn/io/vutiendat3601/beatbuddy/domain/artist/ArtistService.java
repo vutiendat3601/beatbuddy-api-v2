@@ -19,13 +19,14 @@ public class ArtistService {
   private final ArtistDao artistDao;
   private final TrackDao trackDao;
   private final ArtistDtoMapper artistDtoMapper;
+  private final ArtistDetailsDtoMapper artistDetailsDtoMapper;
   private final TrackDtoMapper trackDtoMapper;
 
   @NonNull
-  public ArtistDto getArtistById(@NonNull String id) {
+  public ArtistDetailsDto getArtistById(@NonNull String id) {
     return artistDao
         .selectById(id)
-        .map(artistDtoMapper::apply)
+        .map(artistDetailsDtoMapper::apply)
         .orElseThrow(
             () -> new ResourceNotFoundException("Artist not found: [id=%s]".formatted(id)));
   }
