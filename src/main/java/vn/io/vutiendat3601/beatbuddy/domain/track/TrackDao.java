@@ -3,6 +3,7 @@ package vn.io.vutiendat3601.beatbuddy.domain.track;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.lang.NonNull;
+import vn.io.vutiendat3601.beatbuddy.common.model.Page;
 
 public interface TrackDao {
   @NonNull
@@ -14,11 +15,17 @@ public interface TrackDao {
   @NonNull
   List<Track> selectByUrns(@NonNull List<String> urns);
 
-  Optional<Track> selectByUrn(String urn);
+  @NonNull
+  Optional<Track> selectByUrn(@NonNull String urn);
 
-  boolean existsByUrn(String urn);
+  @NonNull
+  Page<Track> selectByKeyword(@NonNull String keyword, int page, int size);
 
-  List<Track> selectByTopTotalLikes(Integer top);
+  boolean existsByUrn(@NonNull String urn);
 
-  List<Track> selectByArtistIdAndTopTotalLikes(String artistId, Integer top);
+  @NonNull
+  List<Track> selectByTopTotalLikes(@NonNull Integer top);
+
+  @NonNull
+  List<Track> selectByArtistIdAndTopTotalLikes(@NonNull String artistId, @NonNull Integer top);
 }
