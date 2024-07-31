@@ -1,8 +1,10 @@
 package vn.io.vutiendat3601.beatbuddy.domain.track;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -10,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+@SecurityRequirement(name = "web")
 @Tag(name = "Track")
 @RequiredArgsConstructor
 @RestController
@@ -28,8 +31,10 @@ public class TrackController {
   }
 
   @GetMapping("popularity")
-  public ResponseEntity<List<TrackDto>> getPopularTrack(
-      @RequestParam(defaultValue = "10", required = false) Integer top) {
+  public ResponseEntity<TrackPopularityDto> getPopularTrack(
+      @RequestParam(defaultValue = "10", required = false)
+          @Range(min = 5, max = 100, message = "top must be in range [5, 100]")
+          Integer top) {
     return ResponseEntity.ok(trackService.getPopularTrack(top));
   }
 }

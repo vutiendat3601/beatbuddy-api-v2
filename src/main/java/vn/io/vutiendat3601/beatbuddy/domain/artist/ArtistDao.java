@@ -15,4 +15,7 @@ public interface ArtistDao {
 
   @NonNull
   Page<Artist> selectByKeyword(@NonNull String keyword, int page, int size);
+
+  @NonNull
+  List<Artist> selectTopByTotalLikesDesc(int top);
 }

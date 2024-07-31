@@ -16,6 +16,8 @@ public interface ArtistRepository extends JpaRepository<Artist, UUID> {
 
   List<Artist> findAllByIdIn(Iterable<String> ids);
 
+  List<Artist> findAllByOrderByTotalLikesDesc(Pageable pageable);
+
   @Query(
       value =
           """

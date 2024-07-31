@@ -38,15 +38,14 @@ public class TrackJpaDataAccessService implements TrackDao {
 
   @NonNull
   @Override
-  public List<Track> selectByTopTotalLikes(@NonNull Integer top) {
+  public List<Track> selectTopByTotalLikesDesc(int top) {
     final Pageable pageable = Pageable.ofSize(top);
     return trackRepo.findAllByOrderByTotalLikesDesc(pageable);
   }
 
-  @NonNull
   @Override
-  public List<Track> selectByArtistIdAndTopTotalLikes(
-      @NonNull String artistId, @NonNull Integer top) {
+  @NonNull
+  public List<Track> selectTopByArtistIdAndTotalLikesDesc(@NonNull String artistId, int top) {
     final Pageable pageable = Pageable.ofSize(top);
     return trackRepo.findAllByArtistsIdOrderByTotalLikesDesc(artistId, pageable);
   }

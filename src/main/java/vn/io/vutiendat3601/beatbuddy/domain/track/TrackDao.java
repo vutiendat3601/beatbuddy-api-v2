@@ -24,8 +24,8 @@ public interface TrackDao {
   boolean existsByUrn(@NonNull String urn);
 
   @NonNull
-  List<Track> selectByTopTotalLikes(@NonNull Integer top);
+  List<Track> selectTopByTotalLikesDesc(int top);
 
   @NonNull
-  List<Track> selectByArtistIdAndTopTotalLikes(@NonNull String artistId, @NonNull Integer top);
+  List<Track> selectTopByArtistIdAndTotalLikesDesc(@NonNull String artistId, int top);
 }
