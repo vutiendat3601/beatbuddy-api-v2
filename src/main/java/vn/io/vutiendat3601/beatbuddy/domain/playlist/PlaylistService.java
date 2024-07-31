@@ -18,6 +18,7 @@ import vn.io.vutiendat3601.beatbuddy.domain.track.Track;
 import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDao;
 import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDto;
 import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDtoMapper;
+import vn.io.vutiendat3601.beatbuddy.security.UserContext;
 import vn.io.vutiendat3601.beatbuddy.util.StringUtils;
 
 @RequiredArgsConstructor
@@ -29,7 +30,7 @@ public class PlaylistService {
   private final TrackDtoMapper trackDtoMapper;
 
   public void createPlaylist(@NonNull PlaylistCreateRequest playlistCreateReq) {
-    final String ownerId = "1a6896a1-225f-4bc2-a7bb-17db09b7dfa4"; // TODO: change this hard code
+    final String ownerId = UserContext.getUserId();
     final String id = StringUtils.randomString(PLAYLIST_ID_LENGTH);
     final String urn = PLAYLIST_URN_PREFIX + id;
     final Set<String> unaccentTags =
@@ -73,7 +74,7 @@ public class PlaylistService {
   }
 
   public List<PlaylistDto> getAllPlaylistByCurrentUser() {
-    final String ownerId = "1a6896a1-225f-4bc2-a7bb-17db09b7dfa4"; // TODO: change this hard code
+    final String ownerId = UserContext.getUserId();
     final List<Playlist> playlists = playlistDao.selectByOwnerId(ownerId);
     return playlists.stream().map(playlistDtoMapper::apply).toList();
   }

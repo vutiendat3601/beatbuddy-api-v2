@@ -44,8 +44,16 @@ public class ArtistService {
   }
 
   @NonNull
-  public List<TrackDto> getPopularTrack(@NonNull String artistId, @NonNull Integer top) {
-    final List<Track> artists = trackDao.selectByArtistIdAndTopTotalLikes(artistId, top);
-    return artists.stream().map(trackDtoMapper::apply).toList();
+  public ArtistContentPopularityDto getArtistPopularContent(@NonNull String artistId, int top) {
+    final List<Track> tracks = trackDao.selectTopByArtistIdAndTotalLikesDesc(artistId, top);
+    final List<TrackDto> trackDtos = tracks.stream().map(trackDtoMapper::apply).toList();
+    return new ArtistContentPopularityDto(top, trackDtos);
+  }
+
+  @NonNull
+  public ArtistPopularityDto getPopularArtist(int top) {
+    final List<Artist> artists = artistDao.selectTopByTotalLikesDesc(top);
+    final List<ArtistDto> artistDtos = artists.stream().map(artistDtoMapper::apply).toList();
+    return new ArtistPopularityDto(top, artistDtos);
   }
 }

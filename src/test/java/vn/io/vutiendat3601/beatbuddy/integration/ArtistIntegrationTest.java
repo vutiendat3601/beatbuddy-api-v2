@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
 import vn.io.vutiendat3601.beatbuddy.AbstractIntegrationTest;
 import vn.io.vutiendat3601.beatbuddy.domain.artist.Artist;
@@ -42,7 +43,12 @@ public class ArtistIntegrationTest extends AbstractIntegrationTest {
     final String id = artists[0].getId();
 
     // When
-    final ResponseSpec actual = webTestClient.get().uri("/v2/artists/{id}", id).exchange();
+    final ResponseSpec actual =
+        webTestClient
+            .get()
+            .uri("/v2/artists/{id}", id)
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+            .exchange();
 
     // Then
     actual.expectStatus().isOk();
@@ -56,7 +62,12 @@ public class ArtistIntegrationTest extends AbstractIntegrationTest {
     final String ids = String.join(",", List.of(artists).stream().map(Artist::getId).toList());
 
     // When
-    final ResponseSpec actual = webTestClient.get().uri("/v2/artists?ids=" + ids).exchange();
+    final ResponseSpec actual =
+        webTestClient
+            .get()
+            .uri("/v2/artists?ids=" + ids)
+            .header(HttpHeaders.AUTHORIZATION, "Bearer " + token)
+            .exchange();
 
     // Then
     actual.expectStatus().isOk();

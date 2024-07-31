@@ -45,8 +45,9 @@ public class TrackService {
     return trackDtos;
   }
 
-  public List<TrackDto> getPopularTrack(Integer top) {
-    final List<Track> tracks = trackDao.selectByTopTotalLikes(top);
-    return tracks.stream().map(trackDtoMapper::apply).toList();
+  public TrackPopularityDto getPopularTrack(int top) {
+    final List<Track> tracks = trackDao.selectTopByTotalLikesDesc(top);
+    final List<TrackDto> trackDtos = tracks.stream().map(trackDtoMapper::apply).toList();
+    return new TrackPopularityDto(top, trackDtos);
   }
 }

@@ -18,12 +18,92 @@ spring:
         "[format_sql]": true
         jdbc:
           "[time_zone]": UTC
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: https://auth.beatbuddy.io.vn/realms/beatbuddy/protocol/openid-connect/certs
+
 springdoc:
   api-docs:
     path: /apidocs
   swagger-ui:
     path: /apidocs.html
-    oauth2RedirectUrl: https://api.beatbuddy.io.vn/swagger-ui/oauth2-redirect.html
+    oauth2RedirectUrl: http://127.0.0.1:8000/swagger-ui/oauth2-redirect.html
     oauth:
       client-id: web
       use-pkce-with-authorization-code-grant: true
+logging:
+  level:
+    root: INFO
+    "[vn.io.vutiendat3601.beatbuddy]": DEBUG
+
+auth:
+  resource:
+    urn:
+      numberOfParts: 3
+      typePartIndex: 1
+      idPartIndex: 2
+      partSeparator: ":"
+    types:
+      - name: playlist
+        uriPrefixes: ["/v2/playlists/{id}", "/v2/playlists/{id}/add-item"]
+        ownerScopes:
+          [playlist:permission, playlist:view, playlist:edit, playlist:delete]
+        requesterScopes: [playlist:permission, playlist:view, playlist:edit]
+
+security:
+  client:
+    resource-management:
+      authServerUrl: https://auth.beatbuddy.io.vn
+      realm: beatbuddy
+      clientId: resource-management
+      clientSecret: JqMYJcGpELv8g93dGGBChjzcaWZbWtGf
+      permissions:
+    user-management:
+      authServerUrl: https://auth.beatbuddy.io.vn
+      realm: beatbuddy
+      clientId: user-management
+      clientSecret: oH6fyIexWj8OrRp9d8LPdyDgTtXc1Tb6
+    web-representation:
+      authServerUrl: https://auth.beatbuddy.io.vn
+      realm: beatbuddy
+      clientId: web-representation
+      clientSecret: 9zhHRYgodGe6bhTZqai8qXigNQQXkkCY
+  routeSpecs:
+    # Common public GET routes
+    - uris: /v2/auth/token/client-token,/apidocs*/**,/swagger-ui/**,/errors/access-denied
+      method: GET
+      authorities: permitAll
+
+    # Common Authenticated GET routes
+    - uris:
+      method: GET
+      authorities: authenticated
+
+    # Track
+    - uris: /v2/tracks,/v2/tracks/popularity,/v2/tracks/{id}
+      method: GET
+      authorities: track:view
+
+    # Artist
+    - uris: /v2/artists,/v2/artists/popularity,/v2/artists/{id},/v2/artists/{id}/popularity
+      method: GET
+      authorities: artist:view
+
+    # Playlist
+    - uris: /v2/playlists/me
+      method: GET
+      authorities: authenticated
+    - uris: /v2/playlists/{id}
+      method: GET
+      authorities: playlist:view
+    - uris: /v2/playlists/{id}
+      method: PUT
+      authorities: playlist:edit
+    - uris: /v2/playlists/{id}
+      method: DELETE
+      authorities: playlist:delete
+    - uris: /v2/playlists
+      method: POST
+      authorities: playlist:create

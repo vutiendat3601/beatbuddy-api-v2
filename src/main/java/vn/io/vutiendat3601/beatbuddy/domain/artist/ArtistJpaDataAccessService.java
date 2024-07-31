@@ -37,4 +37,11 @@ public class ArtistJpaDataAccessService implements ArtistDao {
         artistRepo.findAllByTsv(tsvQuery, pageReq);
     return Page.from(artistPage);
   }
+
+  @Override
+  @NonNull
+  public List<Artist> selectTopByTotalLikesDesc(int top) {
+    final Pageable pageable = Pageable.ofSize(top);
+    return artistRepo.findAllByOrderByTotalLikesDesc(pageable);
+  }
 }

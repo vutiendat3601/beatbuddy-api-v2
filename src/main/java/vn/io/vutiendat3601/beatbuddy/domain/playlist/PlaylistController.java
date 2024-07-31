@@ -1,5 +1,6 @@
 package vn.io.vutiendat3601.beatbuddy.domain.playlist;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.ZonedDateTime;
 import java.util.List;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import vn.io.vutiendat3601.beatbuddy.common.dto.ResponseDto;
 
+@SecurityRequirement(name = "web")
 @Tag(name = "Playlist")
 @RequiredArgsConstructor
 @RestController
