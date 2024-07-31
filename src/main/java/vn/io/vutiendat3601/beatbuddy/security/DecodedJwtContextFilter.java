@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.web.filter.OncePerRequestFilter;
 
 public class DecodedJwtContextFilter extends OncePerRequestFilter {
-  private static final String USER_ID_CLAIM = "user_id";
+  private static final String SUB_CLAIM = "sub";
 
   @Override
   protected void doFilterInternal(
@@ -25,10 +25,8 @@ public class DecodedJwtContextFilter extends OncePerRequestFilter {
     if (authentication instanceof JwtAuthenticationToken) {
       final JwtAuthenticationToken jwtAuthentication = (JwtAuthenticationToken) authentication;
       final Jwt jwt = jwtAuthentication.getToken();
-      final String pkId = jwt.getSubject();
-      final String userId = jwt.getClaimAsString(USER_ID_CLAIM);
+      final String userId = jwt.getClaimAsString(SUB_CLAIM);
 
-      UserContext.setUserPkId(pkId);
       UserContext.setUserId(userId);
       UserContext.setJwtAuthorizationToken(jwt.getTokenValue());
     }

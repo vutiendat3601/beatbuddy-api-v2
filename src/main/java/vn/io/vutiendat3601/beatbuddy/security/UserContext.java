@@ -1,18 +1,9 @@
 package vn.io.vutiendat3601.beatbuddy.security;
 
 public class UserContext {
-  private static ThreadLocal<String> userPkIdRef = new ThreadLocal<>();
   private static ThreadLocal<String> userIdRef = new ThreadLocal<>();
   private static ThreadLocal<String> jwtAuthenticationTokenRef = new ThreadLocal<>();
   private static ThreadLocal<String> jwtAuthorizationTokenRef = new ThreadLocal<>();
-
-  public static String getUserPkId() {
-    return userPkIdRef.get();
-  }
-
-  public static void setUserPkId(String userPkId) {
-    userPkIdRef.set(userPkId);
-  }
 
   public static String getUserId() {
     return userIdRef.get();
