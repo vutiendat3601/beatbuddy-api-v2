@@ -9,14 +9,14 @@ services:
       - "5432:5432"
     networks:
       - default
-  beatbuddy-api-v2:
-    image: "vutien3601/beatbuddy-api-v2:latest"
-    environment:
-      DATABASE_URL: "postgresql://beatbuddy:beatbuddy@postgres:5432/beatbuddy"
-    ports:
-      - "8000:8000"
-    networks:
-      - default
+  # beatbuddy-api-v2:
+  #   image: "vutiendat3601/beatbuddy-api-v2:latest"
+  #   environment:
+  #     DATABASE_URL: "postgresql://beatbuddy:beatbuddy@postgres:5432/beatbuddy"
+  #   ports:
+  #     - "8000:8000"
+  #   networks:
+  #     - default
 networks:
   default:
     name: beatbuddy-v2
