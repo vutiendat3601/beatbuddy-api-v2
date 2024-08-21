@@ -21,12 +21,12 @@ CREATE TABLE artist (
 	updated_at timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	created_by varchar(255) NULL,
 	updated_by varchar(255) NULL,
-	CONSTRAINT artists_pk PRIMARY KEY (pk_id),
-	CONSTRAINT artists_id_key UNIQUE (id),
-	CONSTRAINT artists_ref_code_key UNIQUE (ref_code),
-	CONSTRAINT artists_urn_key UNIQUE (urn)
+	CONSTRAINT artist_pk PRIMARY KEY (pk_id),
+	CONSTRAINT artist_id_key UNIQUE (id),
+	CONSTRAINT artist_ref_code_key UNIQUE (ref_code),
+	CONSTRAINT artist_urn_key UNIQUE (urn)
 );
-CREATE INDEX artists_tsv_idx ON public.artist USING gin (tsv);
+CREATE INDEX artist_tsv_idx ON public.artist USING gin (tsv);
 
 -- Functions
 CREATE OR REPLACE FUNCTION public.artist_update_tsv_column()

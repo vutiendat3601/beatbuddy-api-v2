@@ -16,11 +16,11 @@ CREATE TABLE playlist (
 	created_by varchar(255) NULL,
 	updated_by varchar(255) NULL,
 	CONSTRAINT playlist_pk PRIMARY KEY (pk_id),
-	CONSTRAINT playlists_id_key UNIQUE (id),
+	CONSTRAINT playlist_id_key UNIQUE (id),
 	CONSTRAINT playlist_urn_key UNIQUE (urn)
 );
 
-CREATE INDEX playlists_tsv_idx ON public.playlist USING gin (tsv);
+CREATE INDEX playlist_tsv_idx ON public.playlist USING gin (tsv);
 
 -- Functions
 CREATE OR REPLACE FUNCTION public.playlist_update_tsv_column()

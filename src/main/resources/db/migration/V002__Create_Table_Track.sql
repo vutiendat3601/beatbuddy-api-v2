@@ -20,12 +20,12 @@ CREATE TABLE track (
 	updated_at timestamptz DEFAULT CURRENT_TIMESTAMP NOT NULL,
 	created_by varchar(255) NULL,
 	updated_by varchar(255) NULL,
-	CONSTRAINT tracks_pk PRIMARY KEY (pk_id),
-	CONSTRAINT tracks_id_key UNIQUE (id),
-	CONSTRAINT tracks_ref_code_key UNIQUE (ref_code),
-	CONSTRAINT tracks_urn_key UNIQUE (urn)
+	CONSTRAINT track_pk PRIMARY KEY (pk_id),
+	CONSTRAINT track_id_key UNIQUE (id),
+	CONSTRAINT track_ref_code_key UNIQUE (ref_code),
+	CONSTRAINT track_urn_key UNIQUE (urn)
 );
-CREATE INDEX tracks_tsv_idx ON public.track USING gin (tsv);
+CREATE INDEX track_tsv_idx ON public.track USING gin (tsv);
 
 -- Functions
 CREATE OR REPLACE FUNCTION public.track_update_tsv_column()
