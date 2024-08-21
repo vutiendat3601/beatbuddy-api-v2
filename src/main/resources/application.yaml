@@ -23,7 +23,8 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: https://auth.beatbuddy.io.vn/realms/beatbuddy/protocol/openid-connect/certs
-
+  devtools:
+    add-properties: false
 springdoc:
   api-docs:
     path: /apidocs
@@ -37,6 +38,7 @@ logging:
   level:
     root: INFO
     "[vn.io.vutiendat3601.beatbuddy]": DEBUG
+    web: DEBUG
 
 auth:
   resource:
@@ -72,15 +74,20 @@ security:
       clientSecret: 9zhHRYgodGe6bhTZqai8qXigNQQXkkCY
   routeSpecs:
     # Common public GET routes
-    - uris: /v2/auth/token/client-token,/apidocs*/**,/swagger-ui/**,/errors/access-denied
+    - uris: /v2/me/like,/v2/auth/client-token,/v2/auth/csrf-token,/apidocs*/**,/swagger-ui/**,/errors/access-denied,/ws
       method: GET
       authorities: permitAll
 
     # Common Authenticated GET routes
-    - uris:
+    - uris: /ws/**
       method: GET
       authorities: authenticated
 
+    # Me
+    - uris: /v2/me/playlists,/v2/me/like
+      method: GET
+      authorities: authenticated
+    
     # Track
     - uris: /v2/tracks,/v2/tracks/popularity,/v2/tracks/{id}
       method: GET
@@ -92,9 +99,6 @@ security:
       authorities: artist:view
 
     # Playlist
-    - uris: /v2/playlists/me
-      method: GET
-      authorities: authenticated
     - uris: /v2/playlists/{id}
       method: GET
       authorities: playlist:view
