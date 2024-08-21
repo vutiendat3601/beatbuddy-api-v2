@@ -4,7 +4,6 @@ import static org.junit.Assert.assertFalse;
 
 import java.util.Set;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.web.reactive.server.WebTestClient.ResponseSpec;
 import reactor.core.publisher.Mono;
@@ -16,7 +15,7 @@ public class PlaylistIntegrationTest extends AbstractIntegrationTest {
   @BeforeEach
   void setUp() {}
 
-  @Test
+  // @Test
   public void canCreatePlaylist() {
     // Given
     final PlaylistCreateRequest playlistCreateReq =

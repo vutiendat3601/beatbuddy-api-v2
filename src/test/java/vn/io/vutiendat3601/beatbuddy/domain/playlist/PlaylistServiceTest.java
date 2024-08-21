@@ -30,12 +30,12 @@ public class PlaylistServiceTest {
   @Mock private PlaylistDao playlistDao;
 
   @Mock private TrackDao trackDao;
-  private final PlaylistDtoMapper playlistDtoMapper = new PlaylistDtoMapper();
+
   private PlaylistService underTest;
 
   @BeforeEach
   void setUp() {
-    underTest = new PlaylistService(playlistDao, trackDao, playlistDtoMapper, trackDtoMapper);
+    underTest = new PlaylistService(playlistDao, trackDao, trackDtoMapper);
   }
 
   @Test

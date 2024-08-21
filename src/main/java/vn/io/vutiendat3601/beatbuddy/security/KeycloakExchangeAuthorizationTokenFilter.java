@@ -34,11 +34,10 @@ public class KeycloakExchangeAuthorizationTokenFilter extends OncePerRequestFilt
       @NonNull HttpServletResponse resp,
       @NonNull FilterChain chain)
       throws ServletException, IOException {
-    String origToken = req.getHeader(HttpHeaders.AUTHORIZATION);
-    origToken = origToken == null ? req.getHeader(CLIENT_TOKEN) : origToken;
-    if (origToken != null && origToken.startsWith("Bearer ")) {
-      origToken = origToken.substring(7);
-      UserContext.setJwtAuthenticationToken(origToken);
+    String token = req.getHeader(HttpHeaders.AUTHORIZATION);
+    token = token == null ? req.getHeader(CLIENT_TOKEN) : token;
+    if (token != null && token.startsWith("Bearer ") && token.length() > 7) {
+      token = token.substring(7);
 
       // Find resources by matching uri
       final String uri = req.getServletPath();
@@ -46,7 +45,7 @@ public class KeycloakExchangeAuthorizationTokenFilter extends OncePerRequestFilt
           authzClient.protection().resource().findByMatchingUri(uri);
       if (!resources.isEmpty()) {
         final AuthorizationRequest authzRequest = new AuthorizationRequest();
-        authzRequest.setSubjectToken(origToken);
+        authzRequest.setSubjectToken(token);
         final Set<String> uris = new HashSet<>();
         final List<String> scopes = new LinkedList<>();
         for (ResourceRepresentation resource : resources) {

@@ -6,6 +6,8 @@ import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.hibernate.validator.constraints.Range;
 import org.springframework.http.ResponseEntity;
+import org.springframework.messaging.handler.annotation.MessageMapping;
+import org.springframework.messaging.handler.annotation.Payload;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,5 +38,10 @@ public class TrackController {
           @Range(min = 5, max = 100, message = "top must be in range [5, 100]")
           Integer top) {
     return ResponseEntity.ok(trackService.getPopularTrack(top));
+  }
+
+  @MessageMapping("/ws/v2/tracks/like")
+  public void likeTrack(@Payload TrackLikeRequest trackLikeReq) {
+    trackService.likeTrack(trackLikeReq);
   }
 }

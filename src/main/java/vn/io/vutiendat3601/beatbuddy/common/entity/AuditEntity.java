@@ -1,8 +1,10 @@
 package vn.io.vutiendat3601.beatbuddy.common.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.EntityListeners;
 import jakarta.persistence.MappedSuperclass;
 import java.time.ZonedDateTime;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -20,9 +22,15 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @NoArgsConstructor
 @MappedSuperclass
 public abstract class AuditEntity {
-  @CreatedDate protected ZonedDateTime createdAt;
+  @Builder.Default
+  @CreatedDate
+  @Column(name = "created_at")
+  protected ZonedDateTime createdAt = ZonedDateTime.now();
 
-  @LastModifiedDate protected ZonedDateTime updatedAt;
+  @Builder.Default
+  @LastModifiedDate
+  @Column(name = "updated_at")
+  protected ZonedDateTime updatedAt = ZonedDateTime.now();
 
   @CreatedBy protected String createdBy;
 

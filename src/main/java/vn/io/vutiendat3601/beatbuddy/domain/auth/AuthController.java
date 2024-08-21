@@ -16,10 +16,15 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthController {
   private final AuthzClient webRepresentationClient;
 
-  @GetMapping("token/client-token")
+  @GetMapping("client-token")
   public ResponseEntity<TokenDto> getClientToken() {
     final AccessTokenResponse accToken = webRepresentationClient.obtainAccessToken();
     return ResponseEntity.ok(
         new TokenDto(accToken.getToken(), accToken.getTokenType(), accToken.getExpiresIn()));
   }
+
+  // @GetMapping("csrf-token")
+  // public ResponseEntity<CsrfToken> getCsrfToken(final CsrfToken csrfToken) {
+  //   return ResponseEntity.ok(csrfToken);
+  // }
 }

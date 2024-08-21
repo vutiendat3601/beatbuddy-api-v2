@@ -6,5 +6,5 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public record TokenDto(
     @Schema(name = "token", description = "Token value") String token,
     @Schema(name = "tokenType", description = "Token type") String tokenType,
-    @Schema(name = "expiresIn", description = "Token expiration time in miliseconds")
-        long expiresIn) {}
+    @Schema(name = "expiresInSec", description = "Token expiration time in seconds")
+        long expiresInSec) {}

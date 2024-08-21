@@ -1,5 +1,6 @@
 package vn.io.vutiendat3601.beatbuddy.domain.artist;
 
+import io.micrometer.common.lang.NonNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,14 +11,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface ArtistRepository extends JpaRepository<Artist, UUID> {
-  Optional<Artist> findByUrn(String urn);
+  @NonNull
+  Optional<Artist> findByUrn(@NonNull String urn);
 
-  Optional<Artist> findById(String id);
+  @NonNull
+  Optional<Artist> findById(@NonNull String id);
 
-  List<Artist> findAllByIdIn(Iterable<String> ids);
+  @NonNull
+  List<Artist> findAllByIdIn(@NonNull Iterable<String> ids);
 
-  List<Artist> findAllByOrderByTotalLikesDesc(Pageable pageable);
+  @NonNull
+  List<Artist> findAllByOrderByTotalLikesDesc(@NonNull Pageable pageable);
 
+  @NonNull
   @Query(
       value =
           """
@@ -25,5 +31,6 @@ public interface ArtistRepository extends JpaRepository<Artist, UUID> {
           ORDER BY total_likes DESC
           """,
       nativeQuery = true)
-  Page<Artist> findAllByTsv(@Param("tsvQuery") String tsvQuery, Pageable pageable);
+  Page<Artist> findAllByTsv(
+      @NonNull @Param("tsvQuery") String tsvQuery, @NonNull Pageable pageable);
 }
