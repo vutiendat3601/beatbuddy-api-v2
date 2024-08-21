@@ -18,7 +18,7 @@ import vn.io.vutiendat3601.beatbuddy.domain.track.Track;
 import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDao;
 import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDto;
 import vn.io.vutiendat3601.beatbuddy.domain.track.TrackDtoMapper;
-import vn.io.vutiendat3601.beatbuddy.security.UserContext;
+import vn.io.vutiendat3601.beatbuddy.util.JwtUtils;
 import vn.io.vutiendat3601.beatbuddy.util.StringUtils;
 
 @RequiredArgsConstructor
@@ -26,11 +26,10 @@ import vn.io.vutiendat3601.beatbuddy.util.StringUtils;
 public class PlaylistService {
   private final PlaylistDao playlistDao;
   private final TrackDao trackDao;
-  private final PlaylistDtoMapper playlistDtoMapper;
   private final TrackDtoMapper trackDtoMapper;
 
   public void createPlaylist(@NonNull PlaylistCreateRequest playlistCreateReq) {
-    final String ownerId = UserContext.getUserId();
+    final String ownerId = JwtUtils.getSub();
     final String id = StringUtils.randomString(PLAYLIST_ID_LENGTH);
     final String urn = PLAYLIST_URN_PREFIX + id;
     final Set<String> unaccentTags =
@@ -71,12 +70,6 @@ public class PlaylistService {
       throw new RequestValidationException("No changes found");
     }
     playlistDao.update(playlist);
-  }
-
-  public List<PlaylistDto> getAllPlaylistByCurrentUser() {
-    final String ownerId = UserContext.getUserId();
-    final List<Playlist> playlists = playlistDao.selectByOwnerId(ownerId);
-    return playlists.stream().map(playlistDtoMapper::apply).toList();
   }
 
   @NonNull

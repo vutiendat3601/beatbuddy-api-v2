@@ -1,5 +1,6 @@
 package vn.io.vutiendat3601.beatbuddy.domain.playlist;
 
+import io.micrometer.common.lang.NonNull;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -10,15 +11,19 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 public interface PlaylistRepository extends JpaRepository<Playlist, UUID> {
-  List<Playlist> findAllByOwnerIdOrderByCreatedAtDesc(String ownerId);
+  @NonNull
+  List<Playlist> findAllByOwnerIdOrderByCreatedAtDesc(@NonNull String ownerId);
 
-  Optional<Playlist> findById(String id);
+  @NonNull
+  Optional<Playlist> findById(@NonNull String id);
 
+  @NonNull
   @Query(
       value =
           """
           SELECT * FROM playlist WHERE tsv @@ to_tsquery(:tsvQuery)
           """,
       nativeQuery = true)
-  Page<Playlist> findAllByTsv(@Param("tsvQuery") String tsvQuery, Pageable pageable);
+  Page<Playlist> findAllByTsv(
+      @NonNull @Param("tsvQuery") String tsvQuery, @NonNull Pageable pageable);
 }

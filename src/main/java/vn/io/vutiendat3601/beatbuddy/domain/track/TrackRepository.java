@@ -8,22 +8,31 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
+import org.springframework.lang.NonNull;
 
 public interface TrackRepository extends JpaRepository<Track, UUID> {
-  Optional<Track> findByUrn(String urn);
+  @NonNull
+  Optional<Track> findByUrn(@NonNull String urn);
 
-  Optional<Track> findById(String id);
+  @NonNull
+  Optional<Track> findById(@NonNull String id);
 
-  List<Track> findAllByIdIn(Iterable<String> ids);
+  @NonNull
+  List<Track> findAllByIdIn(@NonNull Iterable<String> ids);
 
-  boolean existsByUrn(String urn);
+  boolean existsByUrn(@NonNull String urn);
 
-  List<Track> findAllByUrnIn(List<String> urns);
+  @NonNull
+  List<Track> findAllByUrnIn(@NonNull List<String> urns);
 
-  List<Track> findAllByOrderByTotalLikesDesc(Pageable pageable);
+  @NonNull
+  List<Track> findAllByOrderByTotalLikesDesc(@NonNull Pageable pageable);
 
-  List<Track> findAllByArtistsIdOrderByTotalLikesDesc(String artistId, Pageable pageable);
+  @NonNull
+  List<Track> findAllByArtistsIdOrderByTotalLikesDesc(
+      @NonNull String artistId, @NonNull Pageable pageable);
 
+  @NonNull
   @Query(
       value =
           """
@@ -31,5 +40,5 @@ public interface TrackRepository extends JpaRepository<Track, UUID> {
           ORDER BY total_likes DESC
           """,
       nativeQuery = true)
-  Page<Track> findAllByTsv(@Param("tsvQuery") String tsvQuery, Pageable pageable);
+  Page<Track> findAllByTsv(@NonNull @Param("tsvQuery") String tsvQuery, @NonNull Pageable pageable);
 }

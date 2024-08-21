@@ -20,10 +20,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import vn.io.vutiendat3601.beatbuddy.common.exception.ResourceNotFoundException;
 import vn.io.vutiendat3601.beatbuddy.domain.artist.ArtistDtoMapper;
+import vn.io.vutiendat3601.beatbuddy.domain.like.LikeDao;
 
 @ExtendWith(MockitoExtension.class)
 public class TrackServiceTest {
   @Mock private TrackDao trackDao;
+  @Mock private LikeDao likeDao;
   private final ArtistDtoMapper artistDtoMapper = new ArtistDtoMapper();
   private final TrackDtoMapper trackDtoMapper = new TrackDtoMapper(artistDtoMapper);
   private final TrackDetailsDtoMapper trackDetailsDtoMapper =
@@ -33,7 +35,7 @@ public class TrackServiceTest {
 
   @BeforeEach
   void setUp() {
-    underTest = new TrackService(trackDao, trackDtoMapper, trackDetailsDtoMapper);
+    underTest = new TrackService(trackDao, likeDao, trackDtoMapper, trackDetailsDtoMapper);
   }
 
   /* #: getTrackById */

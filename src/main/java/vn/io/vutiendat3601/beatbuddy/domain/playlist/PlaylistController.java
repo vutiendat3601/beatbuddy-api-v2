@@ -3,7 +3,6 @@ package vn.io.vutiendat3601.beatbuddy.domain.playlist;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import java.time.ZonedDateTime;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -40,12 +39,6 @@ public class PlaylistController {
   public ResponseEntity<PlaylistDetailsDto> getPlaylistById(@PathVariable String id) {
     final PlaylistDetailsDto playlistDetailsDto = playlistService.getPlaylistDetailsById(id);
     return ResponseEntity.ok(playlistDetailsDto);
-  }
-
-  @GetMapping("me")
-  public ResponseEntity<List<PlaylistDto>> getMyPlaylist() {
-    final List<PlaylistDto> playlistDtos = playlistService.getAllPlaylistByCurrentUser();
-    return ResponseEntity.ok(playlistDtos);
   }
 
   @PutMapping("{id}")
