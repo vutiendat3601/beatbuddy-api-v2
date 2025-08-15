@@ -223,6 +223,7 @@
               <tag>latest</tag>
             </tags>
           </to>
+          <mainClass>vn.io.vutiendat3601.beatbuddy.BeatbuddyApiV2Application</mainClass>
         </configuration>
       </plugin>
     </plugins>
